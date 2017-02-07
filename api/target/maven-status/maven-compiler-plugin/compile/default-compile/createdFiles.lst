@@ -1,0 +1,6 @@
+org/openmrs/module/openmrs/module/opensrp/kenya/evr/KenyaEVRConfig.class
+org/openmrs/module/openmrs/module/opensrp/kenya/evr/Item.class
+org/openmrs/module/openmrs/module/opensrp/kenya/evr/api/KenyaEVRService.class
+org/openmrs/module/openmrs/module/opensrp/kenya/evr/api/impl/KenyaEVRServiceImpl.class
+org/openmrs/module/openmrs/module/opensrp/kenya/evr/KenyaEVRActivator.class
+org/openmrs/module/openmrs/module/opensrp/kenya/evr/api/dao/KenyaEVRDao.class

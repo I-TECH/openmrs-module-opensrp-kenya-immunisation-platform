@@ -1,0 +1,6 @@
+/srv/applications/openmrs-module-opensrp-kenya-immunisation-platform/api/src/main/java/org/openmrs/module/openmrs/module/opensrp/kenya/evr/api/impl/KenyaEVRServiceImpl.java
+/srv/applications/openmrs-module-opensrp-kenya-immunisation-platform/api/src/main/java/org/openmrs/module/openmrs/module/opensrp/kenya/evr/KenyaEVRConfig.java
+/srv/applications/openmrs-module-opensrp-kenya-immunisation-platform/api/src/main/java/org/openmrs/module/openmrs/module/opensrp/kenya/evr/api/dao/KenyaEVRDao.java
+/srv/applications/openmrs-module-opensrp-kenya-immunisation-platform/api/src/main/java/org/openmrs/module/openmrs/module/opensrp/kenya/evr/Item.java
+/srv/applications/openmrs-module-opensrp-kenya-immunisation-platform/api/src/main/java/org/openmrs/module/openmrs/module/opensrp/kenya/evr/api/KenyaEVRService.java
+/srv/applications/openmrs-module-opensrp-kenya-immunisation-platform/api/src/main/java/org/openmrs/module/openmrs/module/opensrp/kenya/evr/KenyaEVRActivator.java
