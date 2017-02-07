@@ -1,4 +1,4 @@
-${moduleName}
+OpenMRS Module - OpenSRP Immunisation Platform
 ==========================
 
 Description
