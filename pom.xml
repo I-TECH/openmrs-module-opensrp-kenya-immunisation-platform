@@ -9,18 +9,18 @@
     </parent>
 
 	<groupId>org.openmrs.module</groupId>
-	<artifactId>openmrs.module.opensrp.kenya.evr</artifactId>
+	<artifactId>kenyaimmunisationplatform</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>OpenMRS Module - OpenSRP Immunisation Platform</name>
-	<description>OpenMRS based EVR for Kenya</description>
+	<description>OpenMRS/OpenSRP based immunisation platform for Kenya</description>
 
 	<url>https://wiki.openmrs.org/x/FQ4z</url>
 
 	<scm>
-		<connection>scm:git:git@github.com:openmrs/openmrs-module-openmrs.module.opensrp.kenya.evr.git</connection>
-		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-openmrs.module.opensrp.kenya.evr.git</developerConnection>
-		<url>https://github.com/openmrs/openmrs-module-openmrs.module.opensrp.kenya.evr/</url>
+		<connection>scm:git:git@github.com:openmrs/openmrs-module-kenyaimmunisationplatform.git</connection>
+		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-kenyaimmunisationplatform.git</developerConnection>
+		<url>https://github.com/openmrs/openmrs-module-kenyaimmunisationplatform/</url>
 	</scm>
 
 	<modules>

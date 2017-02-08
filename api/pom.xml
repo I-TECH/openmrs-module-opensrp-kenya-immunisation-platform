@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.openmrs.module</groupId>
-		<artifactId>openmrs.module.opensrp.kenya.evr</artifactId>
+		<artifactId>kenyaimmunisationplatform</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>openmrs.module.opensrp.kenya.evr-api</artifactId>
+	<artifactId>kenyaimmunisationplatform-api</artifactId>
 	<packaging>jar</packaging>
-	<name>KenyaEVR API</name>
-	<description>API project for KenyaEVR</description>
+	<name>Kenya Immunisation Platform API</name>
+	<description>API project for Kenya immunisation platform</description>
 </project>
