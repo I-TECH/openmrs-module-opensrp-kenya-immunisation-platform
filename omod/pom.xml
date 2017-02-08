@@ -9,8 +9,8 @@
 
 	<artifactId>kenyaimmunisationplatform-omod</artifactId>
 	<packaging>jar</packaging>
-	<name>Kenya Immunisation Platform OMOD</name>
-	<description>Omod submodule for Kenya immunisation platform</description>
+	<name>OpenMRS Module OpenSRP Immunisation Platform OMOD</name>
+	<description>Omod submodule for OpenMRS Module OpenSRP Immunisation Platform</description>
 
 	<dependencies>
         <dependency>

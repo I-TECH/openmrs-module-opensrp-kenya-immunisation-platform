@@ -2,7 +2,7 @@
 
 <%@ include file="/WEB-INF/template/header.jsp"%>
 
-<h2><spring:message code="openmrs.module.opensrp.kenya.evr.title" /></h2>
+<h2><spring:message code="kenyaimmunisationplatform.title" /></h2>
 
 <br/>
 <table>

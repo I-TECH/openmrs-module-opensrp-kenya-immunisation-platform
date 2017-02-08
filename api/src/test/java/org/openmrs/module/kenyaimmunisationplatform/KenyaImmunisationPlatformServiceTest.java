@@ -7,7 +7,7 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.openmrs.module.opensrp.kenya.evr.api;
+package org.openmrs.module.kenyaimmunisationplatform.api;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,24 +16,24 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.openmrs.User;
 import org.openmrs.api.UserService;
-import org.openmrs.module.openmrs.module.opensrp.kenya.evr.Item;
-import org.openmrs.module.openmrs.module.opensrp.kenya.evr.api.dao.KenyaEVRDao;
-import org.openmrs.module.openmrs.module.opensrp.kenya.evr.api.impl.KenyaEVRServiceImpl;
+import org.openmrs.module.kenyaimmunisationplatform.Item;
+import org.openmrs.module.kenyaimmunisationplatform.api.dao.KenyaImmunisationPlatformDao;
+import org.openmrs.module.kenyaimmunisationplatform.api.impl.KenyaImmunisationPlatformServiceImpl;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 /**
- * This is a unit test, which verifies logic in KenyaEVRService. It doesn't extend
+ * This is a unit test, which verifies logic in KenyaImmunisationPlatformService. It doesn't extend
  * BaseModuleContextSensitiveTest, thus it is run without the in-memory DB and Spring context.
  */
-public class KenyaEVRServiceTest {
+public class KenyaImmunisationPlatformServiceTest {
 	
 	@InjectMocks
-	KenyaEVRServiceImpl basicModuleService;
+	KenyaImmunisationPlatformServiceImpl basicModuleService;
 	
 	@Mock
-	KenyaEVRDao dao;
+	KenyaImmunisationPlatformDao dao;
 	
 	@Mock
 	UserService userService;

@@ -7,7 +7,7 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.openmrs.module.opensrp.kenya.evr.extension.html;
+package org.openmrs.module.kenyaimmunisationplatform.extension.html;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +17,8 @@ import org.openmrs.module.web.extension.AdministrationSectionExt;
 
 /**
  * This class defines the links that will appear on the administration page under the
- * "openmrs.module.opensrp.kenya.evr.title" heading. This extension is enabled by defining
- * (uncommenting) it in the config.xml file.
+ * "kenyaimmunisationplatform.title" heading. This extension is enabled by defining (uncommenting)
+ * it in the config.xml file.
  */
 public class AdminList extends AdministrationSectionExt {
 	
@@ -33,7 +33,7 @@ public class AdminList extends AdministrationSectionExt {
 	 * @see org.openmrs.module.web.extension.AdministrationSectionExt#getTitle()
 	 */
 	public String getTitle() {
-		return "openmrs.module.opensrp.kenya.evr.title";
+		return "kenyaimmunisationplatform.title";
 	}
 	
 	/**
@@ -43,8 +43,7 @@ public class AdminList extends AdministrationSectionExt {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
-		map.put("module/openmrs.module.opensrp.kenya.evr/openmrs.module.opensrp.kenya.evr.form",
-		    "openmrs.module.opensrp.kenya.evr.title");
+		map.put("module/kenyaimmunisationplatform/kenyaimmunisationplatform.form", "kenyaimmunisationplatform.title");
 		
 		return map;
 	}

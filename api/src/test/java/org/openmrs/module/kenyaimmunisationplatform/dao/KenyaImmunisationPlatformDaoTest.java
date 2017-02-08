@@ -7,13 +7,13 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.openmrs.module.opensrp.kenya.evr.api.dao;
+package org.openmrs.module.kenyaimmunisationplatform.api.dao;
 
 import org.junit.Test;
 import org.junit.Ignore;
 import org.openmrs.api.UserService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.openmrs.module.opensrp.kenya.evr.Item;
+import org.openmrs.module.kenyaimmunisationplatform.Item;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.hamcrest.Matchers.*;
@@ -25,10 +25,10 @@ import static org.junit.Assert.*;
  * standardTestDataset.xml in openmrs-api. All test methods are executed in transactions, which are
  * rolled back by the end of each test method.
  */
-public class KenyaEVRDaoTest extends BaseModuleContextSensitiveTest {
+public class KenyaImmunisationPlatformDaoTest extends BaseModuleContextSensitiveTest {
 	
 	@Autowired
-	KenyaEVRDao dao;
+	KenyaImmunisationPlatformDao dao;
 	
 	@Autowired
 	UserService userService;

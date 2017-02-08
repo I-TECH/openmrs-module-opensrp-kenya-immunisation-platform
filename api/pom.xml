@@ -9,6 +9,6 @@
 
 	<artifactId>kenyaimmunisationplatform-api</artifactId>
 	<packaging>jar</packaging>
-	<name>Kenya Immunisation Platform API</name>
-	<description>API project for Kenya immunisation platform</description>
+	<name>OpenMRS Module OpenSRP Immunisation Platform API</name>
+	<description>API project for OpenMRS Module OpenSRP Immunisation Platform</description>
 </project>

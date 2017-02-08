@@ -7,7 +7,7 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.openmrs.module.opensrp.kenya.evr;
+package org.openmrs.module.kenyaimmunisationplatform;
 
 import org.openmrs.BaseOpenmrsData;
 import org.openmrs.User;
@@ -24,14 +24,14 @@ import javax.persistence.Table;
 /**
  * Please note that a corresponding table schema must be created in liquibase.xml.
  */
-//Uncomment 2 lines below if you want to make the Item class persistable, see also KenyaEVRDaoTest and liquibase.xml
-//@Entity(name = "openmrs.module.opensrp.kenya.evr.Item")
-//@Table(name = "openmrs.module.opensrp.kenya.evr_item")
+//Uncomment 2 lines below if you want to make the Item class persistable, see also KenyaImmunisationPlatformDaoTest and liquibase.xml
+//@Entity(name = "kenyaimmunisationplatform.Item")
+//@Table(name = "kenyaimmunisationplatform_item")
 public class Item extends BaseOpenmrsData {
 	
 	@Id
 	@GeneratedValue
-	@Column(name = "openmrs.module.opensrp.kenya.evr_item_id")
+	@Column(name = "kenyaimmunisationplatform_item_id")
 	private Integer id;
 	
 	@ManyToOne

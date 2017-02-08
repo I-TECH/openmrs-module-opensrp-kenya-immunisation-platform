@@ -7,7 +7,7 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.openmrs.module.opensrp.kenya.evr;
+package org.openmrs.module.kenyaimmunisationplatform;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,7 +16,7 @@ import org.openmrs.module.BaseModuleActivator;
 /**
  * This class contains the logic that is run every time this module is either started or shutdown
  */
-public class KenyaEVRActivator extends BaseModuleActivator {
+public class KenyaImmunisationPlatformActivator extends BaseModuleActivator {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	
@@ -24,14 +24,14 @@ public class KenyaEVRActivator extends BaseModuleActivator {
 	 * @see #started()
 	 */
 	public void started() {
-		log.info("Started KenyaEVR");
+		log.info("Started OpenMRS Module OpenSRP Immunisation Platform");
 	}
 	
 	/**
 	 * @see #shutdown()
 	 */
 	public void shutdown() {
-		log.info("Shutdown KenyaEVR");
+		log.info("Shutdown OpenMRS Module OpenSRP Immunisation Platform");
 	}
 	
 }

@@ -7,25 +7,25 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.openmrs.module.opensrp.kenya.evr.api.impl;
+package org.openmrs.module.kenyaimmunisationplatform.api.impl;
 
 import org.openmrs.api.APIException;
 import org.openmrs.api.UserService;
 import org.openmrs.api.impl.BaseOpenmrsService;
-import org.openmrs.module.openmrs.module.opensrp.kenya.evr.Item;
-import org.openmrs.module.openmrs.module.opensrp.kenya.evr.api.KenyaEVRService;
-import org.openmrs.module.openmrs.module.opensrp.kenya.evr.api.dao.KenyaEVRDao;
+import org.openmrs.module.kenyaimmunisationplatform.Item;
+import org.openmrs.module.kenyaimmunisationplatform.api.KenyaImmunisationPlatformService;
+import org.openmrs.module.kenyaimmunisationplatform.api.dao.KenyaImmunisationPlatformDao;
 
-public class KenyaEVRServiceImpl extends BaseOpenmrsService implements KenyaEVRService {
+public class KenyaImmunisationPlatformServiceImpl extends BaseOpenmrsService implements KenyaImmunisationPlatformService {
 	
-	KenyaEVRDao dao;
+	KenyaImmunisationPlatformDao dao;
 	
 	UserService userService;
 	
 	/**
 	 * Injected in moduleApplicationContext.xml
 	 */
-	public void setDao(KenyaEVRDao dao) {
+	public void setDao(KenyaImmunisationPlatformDao dao) {
 		this.dao = dao;
 	}
 	

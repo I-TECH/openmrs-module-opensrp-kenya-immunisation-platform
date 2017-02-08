@@ -7,17 +7,17 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.openmrs.module.opensrp.kenya.evr.api.dao;
+package org.openmrs.module.kenyaimmunisationplatform.api.dao;
 
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.api.db.hibernate.DbSession;
 import org.openmrs.api.db.hibernate.DbSessionFactory;
-import org.openmrs.module.openmrs.module.opensrp.kenya.evr.Item;
+import org.openmrs.module.kenyaimmunisationplatform.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository("openmrs.module.opensrp.kenya.evr.KenyaEVRDao")
-public class KenyaEVRDao {
+@Repository("kenyaimmunisationplatform.KenyaImmunisationPlatformDao")
+public class KenyaImmunisationPlatformDao {
 	
 	@Autowired
 	DbSessionFactory sessionFactory;

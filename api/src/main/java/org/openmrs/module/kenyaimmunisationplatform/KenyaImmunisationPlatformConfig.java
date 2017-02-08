@@ -7,15 +7,15 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.openmrs.module.opensrp.kenya.evr;
+package org.openmrs.module.kenyaimmunisationplatform;
 
 import org.springframework.stereotype.Component;
 
 /**
  * Contains module's config.
  */
-@Component("openmrs.module.opensrp.kenya.evr.KenyaEVRConfig")
-public class KenyaEVRConfig {
+@Component("kenyaimmunisationplatform.KenyaImmunisationPlatformConfig")
+public class KenyaImmunisationPlatformConfig {
 	
-	public final static String MODULE_PRIVILEGE = "KenyaEVR Privilege";
+	public final static String MODULE_PRIVILEGE = "OpenMRS Module OpenSRP Immunisation Platform Privilege";
 }

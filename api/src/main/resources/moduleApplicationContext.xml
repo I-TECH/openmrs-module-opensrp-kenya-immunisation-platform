@@ -23,18 +23,18 @@
   		    http://www.springframework.org/schema/util
   		    http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <context:component-scan base-package="org.openmrs.module.openmrs.module.opensrp.kenya.evr" />
+    <context:component-scan base-package="org.openmrs.module.kenyaimmunisationplatform" />
 
-    <!-- Wraps KenyaEVRService methods in DB transactions and OpenMRS interceptors,
+    <!-- Wraps KenyaImmunisationPlatformService methods in DB transactions and OpenMRS interceptors,
     which set audit info like dateCreated, changedBy, etc.-->
-    <bean id="openmrs.module.opensrp.kenya.evr.KenyaEVRService"
+    <bean id="kenyaimmunisationplatform.KenyaImmunisationPlatformService"
             class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager">
             <ref bean="transactionManager" />
         </property>
         <property name="target">
-            <bean class="org.openmrs.module.openmrs.module.opensrp.kenya.evr.api.impl.KenyaEVRServiceImpl">
-                <property name="dao" ref="openmrs.module.opensrp.kenya.evr.KenyaEVRDao" />
+            <bean class="org.openmrs.module.kenyaimmunisationplatform.api.impl.KenyaImmunisationPlatformServiceImpl">
+                <property name="dao" ref="kenyaimmunisationplatform.KenyaImmunisationPlatformDao" />
             </bean>
         </property>
         <property name="preInterceptors">
@@ -45,13 +45,13 @@
         </property>
     </bean>
 
-    <!-- Adds KenyaEVRService to OpenMRS context so it can be accessed
-    calling Context.getService(KenyaEVRService.class) -->
+    <!-- Adds KenyaImmunisationPlatformService to OpenMRS context so it can be accessed
+    calling Context.getService(KenyaImmunisationPlatformService.class) -->
     <bean parent="serviceContext">
         <property name="moduleService">
             <list>
-                <value>org.openmrs.module.openmrs.module.opensrp.kenya.evr.api.KenyaEVRService</value>
-                <ref bean="openmrs.module.opensrp.kenya.evr.KenyaEVRService" />
+                <value>org.openmrs.module.kenyaimmunisationplatform.api.KenyaImmunisationPlatformService</value>
+                <ref bean="kenyaimmunisationplatform.KenyaImmunisationPlatformService" />
             </list>
         </property>
     </bean>
