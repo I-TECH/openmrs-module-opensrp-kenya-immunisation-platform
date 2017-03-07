@@ -20,23 +20,23 @@ import org.openmrs.module.metadatadeploy.bundle.MetadataBundle;
  * This class contains the logic that is run every time this module is either started or shutdown
  */
 public class KenyaImmunisationPlatformActivator extends BaseModuleActivator {
-
-    private Log log = LogFactory.getLog(this.getClass());
-
-    /**
-     * @see #started()
-     */
-    public void started() {
-        Context.getService(MetadataDeployService.class).installBundles(Context.getRegisteredComponents(MetadataBundle
-                .class));
-        log.info("Started OpenMRS Module OpenSRP Immunisation Platform");
-    }
-
-    /**
-     * @see #shutdown()
-     */
-    public void shutdown() {
-        log.info("Shutdown OpenMRS Module OpenSRP Immunisation Platform");
-    }
-
+	
+	private Log log = LogFactory.getLog(this.getClass());
+	
+	/**
+	 * @see #started()
+	 */
+	public void started() {
+		Context.getService(MetadataDeployService.class)
+		        .installBundles(Context.getRegisteredComponents(MetadataBundle.class));
+		log.info("Started OpenMRS Module OpenSRP Immunisation Platform");
+	}
+	
+	/**
+	 * @see #shutdown()
+	 */
+	public void shutdown() {
+		log.info("Shutdown OpenMRS Module OpenSRP Immunisation Platform");
+	}
+	
 }
