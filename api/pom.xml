@@ -11,4 +11,11 @@
 	<packaging>jar</packaging>
 	<name>OpenMRS Module OpenSRP Immunisation Platform API</name>
 	<description>API project for OpenMRS Module OpenSRP Immunisation Platform</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>metadatadeploy-api</artifactId>
+		</dependency>
+	</dependencies>
 </project>
