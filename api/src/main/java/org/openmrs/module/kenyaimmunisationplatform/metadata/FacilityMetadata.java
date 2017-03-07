@@ -23,47 +23,39 @@ import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.location
 
 /**
  * Created by amosl on 3/7/17.
- *
+ * <p>
  * Locations metadata bundle
  */
 @Component
 public class FacilityMetadata extends AbstractMetadataBundle {
-
-    public static final class _LocationAttributeType {
-        public static final String MASTER_FACILITY_CODE = "1fb2c933-0323-11e7-b443-54271eac1477";
-        public static final String OFFICIAL_LANDLINE = "2cc86d22-0323-11e7-b443-54271eac1477";
-        public static final String OFFICIAL_MOBILE = "30aede1c-0323-11e7-b443-54271eac1477";
-        public static final String OFFICIAL_FAX = "3f04a0be-0323-11e7-b443-54271eac1477";
-    }
-
-    /**
-     * @see org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle#install()
-     */
-    @Override
-    public void install() throws Exception {
-        install(locationAttributeType(
-                "Master Facility Code", "Unique facility code allocated by the Ministry of Health",
-                RegexValidatedTextDatatype.class, "\\d{5}", 0, 1,
-                _LocationAttributeType.MASTER_FACILITY_CODE
-        ));
-
-        install(locationAttributeType(
-                "Official Landline", "Landline telephone contact number",
-                FreeTextDatatype.class, "", 0, 1,
-                _LocationAttributeType.OFFICIAL_LANDLINE
-        ));
-
-        install(locationAttributeType(
-                "Official Mobile", "Mobile telephone contact number",
-                FreeTextDatatype.class, "", 0, 1,
-                _LocationAttributeType.OFFICIAL_MOBILE
-        ));
-
-        install(locationAttributeType(
-                "Official Fax", "Fax telephone number",
-                FreeTextDatatype.class, "", 0, 1,
-                _LocationAttributeType.OFFICIAL_FAX
-        ));
-    }
-
+	
+	public static final class _LocationAttributeType {
+		
+		public static final String MASTER_FACILITY_CODE = "1fb2c933-0323-11e7-b443-54271eac1477";
+		
+		public static final String OFFICIAL_LANDLINE = "2cc86d22-0323-11e7-b443-54271eac1477";
+		
+		public static final String OFFICIAL_MOBILE = "30aede1c-0323-11e7-b443-54271eac1477";
+		
+		public static final String OFFICIAL_FAX = "3f04a0be-0323-11e7-b443-54271eac1477";
+	}
+	
+	/**
+	 * @see org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle#install()
+	 */
+	@Override
+	public void install() throws Exception {
+		install(locationAttributeType("Master Facility Code", "Unique facility code allocated by the Ministry of Health",
+		    RegexValidatedTextDatatype.class, "\\d{5}", 0, 1, _LocationAttributeType.MASTER_FACILITY_CODE));
+		
+		install(locationAttributeType("Official Landline", "Landline telephone contact number", FreeTextDatatype.class, "",
+		    0, 1, _LocationAttributeType.OFFICIAL_LANDLINE));
+		
+		install(locationAttributeType("Official Mobile", "Mobile telephone contact number", FreeTextDatatype.class, "", 0,
+		    1, _LocationAttributeType.OFFICIAL_MOBILE));
+		
+		install(locationAttributeType("Official Fax", "Fax telephone number", FreeTextDatatype.class, "", 0, 1,
+		    _LocationAttributeType.OFFICIAL_FAX));
+	}
+	
 }
