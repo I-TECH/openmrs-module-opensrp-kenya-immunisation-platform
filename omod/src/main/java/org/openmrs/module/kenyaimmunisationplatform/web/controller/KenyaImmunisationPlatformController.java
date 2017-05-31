@@ -9,6 +9,7 @@
  */
 package org.openmrs.module.kenyaimmunisationplatform.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.User;
 import org.openmrs.api.UserService;
+import org.openmrs.api.context.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -77,11 +79,15 @@ public class KenyaImmunisationPlatformController {
 	 */
 	@ModelAttribute("users")
 	protected List<User> getUsers() throws Exception {
-		List<User> users = userService.getAllUsers();
-		
-		// this object will be made available to the jsp page under the variable name
-		// that is defined in the @ModuleAttribute tag
-		return users;
+		if (Context.isAuthenticated()) {
+			List<User> users = userService.getAllUsers();
+			
+			// this object will be made available to the jsp page under the variable name
+			// that is defined in the @ModuleAttribute tag
+			return users;
+		} else {
+			return new ArrayList<User>();
+		}
 	}
 	
 }
