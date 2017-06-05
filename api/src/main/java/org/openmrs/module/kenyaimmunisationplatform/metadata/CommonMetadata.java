@@ -87,6 +87,10 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String MOTHERS_NAME = "8d871d18-c2cc-11de-8d13-0010c6dffd0f";
 		
 		public static final String RACE = "8d871386-c2cc-11de-8d13-0010c6dffd0f";
+		
+		public static final String CHW_NAME = "0fc03c0d-ede8-485d-bf93-09b6158db1b9";
+		
+		public static final String CHW_PHONE_NUMBER = "5008fca5-d839-4300-ac23-2cdf27ae5e56";
 	}
 	
 	@Override
@@ -162,5 +166,10 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		    5, _PersonAttributeType.MOTHERS_NAME));
 		install(personAttributeType("Race", "Group of persons related by common descent or heredity", String.class, 0,
 		    false, 6, _PersonAttributeType.RACE));
+		install(personAttributeType("CHW_Name", "This is the name of the patient's Community Health Worker (CHW).",
+		    String.class, 0, false, 6.1, _PersonAttributeType.CHW_NAME));
+		install(personAttributeType("CHW_Phone_Number",
+		    "This is the phone number of the patient's Community Health Worker (CHW).", String.class, 0, false, 6.2,
+		    _PersonAttributeType.CHW_PHONE_NUMBER));
 	}
 }
