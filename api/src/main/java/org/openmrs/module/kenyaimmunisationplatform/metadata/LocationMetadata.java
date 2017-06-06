@@ -24,6 +24,7 @@ import org.openmrs.module.metadatadeploy.source.ObjectSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.location;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.locationAttributeType;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.locationTag;
 
@@ -37,6 +38,11 @@ public class LocationMetadata extends AbstractMetadataBundle {
 	
 	@Autowired
 	private LocationMflSynchronization mflSynchronization;
+	
+	public static final class _Location {
+		
+		public static final String UNKNOWN = "8d6c993e-c2cc-11de-8d13-0010c6dffd0f";
+	}
 	
 	public static final class _LocationAttributeType {
 		
@@ -87,6 +93,8 @@ public class LocationMetadata extends AbstractMetadataBundle {
 		install(locationTag("Health Facility", "Health Facility", _LocationTag.HEALTH_FACILITY));
 		
 		install(true);
+		
+		install(location("Unknown Location", "Unknown Location", _Location.UNKNOWN));
 	}
 	
 	/**
