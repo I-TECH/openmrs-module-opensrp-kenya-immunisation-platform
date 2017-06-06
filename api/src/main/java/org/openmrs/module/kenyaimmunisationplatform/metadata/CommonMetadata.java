@@ -22,6 +22,12 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String TRIAGE = "991b7123-0250-11e7-aef1-54271eac1477";
 		
 		public static final String VACCINATION = "b5a54d86-0250-11e7-aef1-54271eac1477";
+		
+		public static final String CHILD_ENROLLMENT = "74f0fcf0-4a98-11e7-9fd4-080027b84a73";
+		
+		public static final String NEW_WOMAN_REGISTRATION = "8cb2f455-4a98-11e7-9fd4-080027b84a73";
+		
+		public static final String NEW_GUARDIAN_REGISTRATION = "916fe5f5-4a98-11e7-9fd4-080027b84a73";
 	}
 	
 	public static final class _Form {
@@ -101,6 +107,12 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(encounterType("Triage", "Collection of limited data prior to a more thorough examination",
 		    _EncounterType.TRIAGE));
 		install(encounterType("Vaccination", "Collection of information on vaccination given", _EncounterType.VACCINATION));
+		install(encounterType("Child Enrollment", "Initial enrollment of a child to immunisation platform.",
+		    _EncounterType.CHILD_ENROLLMENT));
+		install(encounterType("New Woman Registration", "Registration of a mother of a child.",
+		    _EncounterType.NEW_WOMAN_REGISTRATION));
+		install(encounterType("New Guardian Registration", "Registration of a guardian of a child.",
+		    _EncounterType.NEW_GUARDIAN_REGISTRATION));
 		
 		install(form("Child Enrollment Form", "The first form that captures basic demographic information on the "
 		        + "child and caregiver information", _EncounterType.REGISTRATION, "1", _Form.CHILD_ENROLLMENT));
