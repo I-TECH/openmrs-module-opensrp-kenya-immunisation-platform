@@ -74,39 +74,51 @@ public class LocationMflCsvSource extends AbstractCsvResourceSource<Location> {
 		Set<LocationTag> locationTags;
 		
 		Location county = locationService.getLocation(countyName);
-		if (county == null) {
+		locationTags = new HashSet<LocationTag>();
+		locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.COUNTY));
+		if (county == null || (county != null && !county.getTags().equals(locationTags))) {
 			county = new Location();
-			county.setName(countyName);
+			if (county == null) {
+				county.setName(countyName);
+			} else {
+				county.setName(countyName + " county");
+			}
 			county.setDescription(countyName + " county");
 			county.setCountry("Kenya");
-			locationTags = new HashSet<LocationTag>();
-			locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.COUNTY));
 			county.setTags(locationTags);
 			locationService.saveLocation(county);
 		}
 		
 		Location subCounty = locationService.getLocation(subCountyName);
-		if (subCounty == null) {
+		locationTags = new HashSet<LocationTag>();
+		locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.SUB_COUNTY));
+		if (subCounty == null || (subCounty != null && !subCounty.getTags().equals(locationTags))) {
 			subCounty = new Location();
-			subCounty.setName(constituencyName);
+			if (subCounty == null) {
+				subCounty.setName(constituencyName);
+			} else {
+				subCounty.setName(constituencyName + " sub county");
+			}
 			subCounty.setParentLocation(county);
 			subCounty.setDescription(subCountyName + " sub county");
 			subCounty.setCountry("Kenya");
-			locationTags = new HashSet<LocationTag>();
-			locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.SUB_COUNTY));
 			subCounty.setTags(locationTags);
 			locationService.saveLocation(subCounty);
 		}
 		
 		Location ward = locationService.getLocation(wardName);
-		if (ward == null) {
+		locationTags = new HashSet<LocationTag>();
+		locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.WARD));
+		if (ward == null || (ward != null && !ward.getTags().equals(locationTags))) {
 			ward = new Location();
-			ward.setName(wardName);
+			if (ward == null) {
+				ward.setName(wardName);
+			} else {
+				ward.setName(wardName + " ward");
+			}
 			ward.setParentLocation(subCounty);
 			ward.setDescription(wardName + " ward");
 			ward.setCountry("Kenya");
-			locationTags = new HashSet<LocationTag>();
-			locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.WARD));
 			ward.setTags(locationTags);
 			locationService.saveLocation(ward);
 		}
