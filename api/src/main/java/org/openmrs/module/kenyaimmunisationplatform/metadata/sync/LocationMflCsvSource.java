@@ -66,59 +66,47 @@ public class LocationMflCsvSource extends AbstractCsvResourceSource<Location> {
 		String name = line[1];
 		
 		String countyName = line[9];
-		String constituencyName = line[10];
+		String constituencyName = line[10].equals(countyName) ? line[10] + " sub county" : line[10];
 		String subCountyName = line[11];
-		String wardName = line[12];
+		String wardName = line[12].equals(countyName) || line[12].equals(constituencyName) ? line[12] + " ward" : line[12];
 		String type = line[4];
 		
 		Set<LocationTag> locationTags;
 		
 		Location county = locationService.getLocation(countyName);
-		locationTags = new HashSet<LocationTag>();
-		locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.COUNTY));
-		if (county == null || (county != null && !county.getTags().equals(locationTags))) {
+		if (county == null) {
 			county = new Location();
-			if (county == null) {
-				county.setName(countyName);
-			} else {
-				county.setName(countyName + " county");
-			}
+			county.setName(countyName);
 			county.setDescription(countyName + " county");
 			county.setCountry("Kenya");
+			locationTags = new HashSet<LocationTag>();
+			locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.COUNTY));
 			county.setTags(locationTags);
 			locationService.saveLocation(county);
 		}
 		
-		Location subCounty = locationService.getLocation(subCountyName);
-		locationTags = new HashSet<LocationTag>();
-		locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.SUB_COUNTY));
-		if (subCounty == null || (subCounty != null && !subCounty.getTags().equals(locationTags))) {
+		Location subCounty = locationService.getLocation(constituencyName);
+		if (subCounty == null) {
 			subCounty = new Location();
-			if (subCounty == null) {
-				subCounty.setName(constituencyName);
-			} else {
-				subCounty.setName(constituencyName + " sub county");
-			}
+			subCounty.setName(constituencyName);
 			subCounty.setParentLocation(county);
-			subCounty.setDescription(subCountyName + " sub county");
+			subCounty.setDescription(constituencyName + " sub county");
 			subCounty.setCountry("Kenya");
+			locationTags = new HashSet<LocationTag>();
+			locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.SUB_COUNTY));
 			subCounty.setTags(locationTags);
 			locationService.saveLocation(subCounty);
 		}
 		
 		Location ward = locationService.getLocation(wardName);
-		locationTags = new HashSet<LocationTag>();
-		locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.WARD));
-		if (ward == null || (ward != null && !ward.getTags().equals(locationTags))) {
+		if (ward == null) {
 			ward = new Location();
-			if (ward == null) {
-				ward.setName(wardName);
-			} else {
-				ward.setName(wardName + " ward");
-			}
+			ward.setName(wardName);
 			ward.setParentLocation(subCounty);
 			ward.setDescription(wardName + " ward");
 			ward.setCountry("Kenya");
+			locationTags = new HashSet<LocationTag>();
+			locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.WARD));
 			ward.setTags(locationTags);
 			locationService.saveLocation(ward);
 		}
