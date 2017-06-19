@@ -99,6 +99,11 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String CHW_PHONE_NUMBER = "5008fca5-d839-4300-ac23-2cdf27ae5e56";
 	}
 	
+	public static final class _RelationshipType {
+		
+		public static final String GRANDPARENT_GRANDCHILD = "70fccac8-54d8-11e7-b198-080027b84a73";
+	}
+	
 	@Override
 	public void install() {
 		
@@ -183,5 +188,8 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(personAttributeType("CHW_Phone_Number",
 		    "This is the phone number of the patient's Community Health Worker (CHW).", String.class, 0, false, 6.2,
 		    _PersonAttributeType.CHW_PHONE_NUMBER));
+		
+		install(relationshipType("Grandparent", "Grandchild", "Relationship from a grandparent to the child",
+		    _RelationshipType.GRANDPARENT_GRANDCHILD));
 	}
 }
