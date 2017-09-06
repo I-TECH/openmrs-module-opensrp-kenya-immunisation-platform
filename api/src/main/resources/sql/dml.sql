@@ -1,6 +1,8 @@
+--changeset me:dml runOnChange:true endDelimiter:#$$
+DROP PROCEDURE IF EXISTS sp_populate_etl_patient_demographics
 
-DELIMITER $$
-DROP PROCEDURE IF EXISTS sp_populate_etl_patient_demographics$$
+$$
+
 CREATE PROCEDURE sp_populate_etl_patient_demographics()
 BEGIN
 -- initial set up of etl_patient_demographics table
@@ -102,15 +104,16 @@ set d.county = pa.county,
 	d.address = pa.address
 ;
 
-END$$
-DELIMITER ;
+END
+
+$$
 
 -- -------------------------------------------
 
+DROP PROCEDURE IF EXISTS sp_populate_etl_immunisations
 
+$$
 
-DELIMITER $$
-DROP PROCEDURE IF EXISTS sp_populate_etl_immunisations$$
 CREATE PROCEDURE sp_populate_etl_immunisations()
 	BEGIN
 		-- initial set up of etl_immunisations table
@@ -145,13 +148,14 @@ CREATE PROCEDURE sp_populate_etl_immunisations()
 				i.yf_vx_date = IF(o.concept_id=5864, o.obs_datetime, i.yf_vx_date)
 		;
 
-	END$$
-DELIMITER ;
+$$
 
 -- -------------------------------------------
 
-DELIMITER $$
-DROP PROCEDURE IF EXISTS sp_first_time_setup$$
+DROP PROCEDURE IF EXISTS sp_first_time_setup
+
+$$
+
 CREATE PROCEDURE sp_first_time_setup()
 BEGIN
 DECLARE populate_script_id INT(11);
@@ -165,8 +169,8 @@ CALL sp_populate_etl_immunisations();
 UPDATE openmrs_etl.etl_script_status SET stop_time=NOW() where id= populate_script_id;
 
 SELECT "Completed first time setup", CONCAT("Time: ", NOW());
-END$$
-DELIMITER ;
+
+$$
 
 CALL create_etl_tables();
 CALL sp_first_time_setup();

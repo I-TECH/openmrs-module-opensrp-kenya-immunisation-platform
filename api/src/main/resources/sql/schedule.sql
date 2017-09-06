@@ -1,5 +1,8 @@
-DELIMITER $$
-DROP PROCEDURE IF EXISTS sp_update_etl_patient_demographics$$
+--changeset me:schedule runOnChange:true endDelimiter:#$$
+DROP PROCEDURE IF EXISTS sp_update_etl_patient_demographics
+
+$$
+
 CREATE PROCEDURE sp_update_etl_patient_demographics()
 BEGIN
 
@@ -112,12 +115,14 @@ set d.county = pa.county,
 	d.address = pa.address
 ;
 
-END$$
-DELIMITER ;
+END
 
+$$
 
-DELIMITER $$
-DROP PROCEDURE IF EXISTS sp_update_etl_immunisations$$
+DROP PROCEDURE IF EXISTS sp_update_etl_immunisations
+
+$$
+
 CREATE PROCEDURE sp_update_etl_immunisations()
 BEGIN
 
@@ -157,13 +162,16 @@ insert into openmrs_etl.etl_immunisations(
 				i.yf_vx_date = IF(o.concept_id=5864, o.obs_datetime, i.yf_vx_date)
 		;
 
-END$$
-DELIMITER ;
+END
+
+$$
 
 -- ----------------------------  scheduled updates ---------------------
 
-DELIMITER $$
-DROP PROCEDURE IF EXISTS sp_scheduled_updates$$
+DROP PROCEDURE IF EXISTS sp_scheduled_updates
+
+$$
+
 CREATE PROCEDURE sp_scheduled_updates()
 BEGIN
 DECLARE update_script_id INT(11);
@@ -176,18 +184,24 @@ CALL sp_update_etl_immunisations();
 
 UPDATE openmrs_etl.etl_script_status SET stop_time=NOW() where id= update_script_id;
 
-END$$
-DELIMITER ;
+END
 
-DELIMITER $$
-SET GLOBAL EVENT_SCHEDULER=ON$$
-DROP EVENT IF EXISTS event_update_openmrs_etl_tables$$
+$$
+
+SET GLOBAL EVENT_SCHEDULER=ON
+
+$$
+
+DROP EVENT IF EXISTS event_update_openmrs_etl_tables
+
+$$
+
 CREATE EVENT event_update_openmrs_etl_tables
 	ON SCHEDULE EVERY 5 MINUTE STARTS CURRENT_TIMESTAMP
 	DO
 		CALL sp_scheduled_updates();
 	$$
-DELIMITER ;
+
 
 
 

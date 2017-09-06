@@ -22,6 +22,7 @@
 	<require_modules>
 		<require_module version="${metadatadeployVersion}">org.openmrs.module.metadatadeploy</require_module>
 		<require_module version="${idgenVersion}">org.openmrs.module.idgen</require_module>
+		<require_module version="${reportingVersion}">org.openmrs.module.reporting</require_module>
 	</require_modules>
 	
 	<!-- Extensions -->
