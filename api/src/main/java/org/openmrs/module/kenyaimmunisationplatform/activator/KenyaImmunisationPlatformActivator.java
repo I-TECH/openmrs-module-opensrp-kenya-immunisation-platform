@@ -7,7 +7,7 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.kenyaimmunisationplatform;
+package org.openmrs.module.kenyaimmunisationplatform.activator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +15,9 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.BaseModuleActivator;
 import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
 import org.openmrs.module.metadatadeploy.bundle.MetadataBundle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class contains the logic that is run every time this module is either started or shutdown
@@ -27,6 +30,12 @@ public class KenyaImmunisationPlatformActivator extends BaseModuleActivator {
 	 * @see #started()
 	 */
 	public void started() {
+		log.info("OpenMRS Module OpenSRP Immunisation Platform module started - initializing...");
+
+		for (Initializer initializer : getInitializers()) {
+			initializer.started();
+		}
+
 		Context.getService(MetadataDeployService.class)
 		        .installBundles(Context.getRegisteredComponents(MetadataBundle.class));
 		log.info("Started OpenMRS Module OpenSRP Immunisation Platform");
@@ -37,6 +46,12 @@ public class KenyaImmunisationPlatformActivator extends BaseModuleActivator {
 	 */
 	public void shutdown() {
 		log.info("Shutdown OpenMRS Module OpenSRP Immunisation Platform");
+	}
+
+	public List<Initializer> getInitializers() {
+		List<Initializer> l = new ArrayList<Initializer>();
+		l.add(new ReportInitializer());
+		return l;
 	}
 	
 }
