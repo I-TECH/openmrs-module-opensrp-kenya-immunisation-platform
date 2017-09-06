@@ -64,8 +64,8 @@ public class Moh510Report implements ReportManager{
         sb.append("SELECT d.kip_id, d.permanent_register_number, d.cwc_number, " +
                 " concat(d.given_name, ' ', d.middle_name, ' ', d.family_name) as name," +
                 " d.gender, d.dob, i.bcg_vx_date, i.opv_0_vx_date, i.opv_1_vx_date, i.pcv_1_vx_date, " +
-                " i.penta_1_vx_date, i.rota_1_vx_date, i.opv_2_vx_date, i.pcv_2_vx_date, i.penta_2_vx_date " +
-                " i.rota_2_vx_date, i.opv_3_vx_date, i.pcv_3_vx_date, i.penta_3_vx_date, i.ipv_vx_date " +
+                " i.penta_1_vx_date, i.rota_1_vx_date, i.opv_2_vx_date, i.pcv_2_vx_date, i.penta_2_vx_date, " +
+                " i.rota_2_vx_date, i.opv_3_vx_date, i.pcv_3_vx_date, i.penta_3_vx_date, i.ipv_vx_date, " +
                 " i.mr_1_vx_date, i.mr_2_vx_date, i.mr_at_6_vx_date, i.yf_vx_date, i.vit_at_6_vx_date" +
                 " from openmrs_etl.etl_patient_demographics d left join openmrs_etl.etl_immunisations i " +
                 " on d.patient_id = i.patient_id");
