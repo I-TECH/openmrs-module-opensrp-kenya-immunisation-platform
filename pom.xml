@@ -125,6 +125,6 @@
 		<metadatamappingVersion>1.0.1</metadatamappingVersion>
 		<metadatasharingVersion>1.1.8</metadatasharingVersion>
 		<idgenVersion>3.2</idgenVersion>
-		<reportingVersion>1.12.0</reportingVersion>
+		<reportingVersion>0.9.8.1</reportingVersion>
     </properties>
 </project>
