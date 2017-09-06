@@ -79,8 +79,12 @@ public class Moh510Report implements ReportManager{
     @Override
     public List<ReportDesign> constructReportDesigns(ReportDefinition reportDefinition) {
         String resourcePath = ReportUtil.getPackageAsPath(getClass()) + "/" + EXCEL_REPORT_RESOURCE_NAME;
+
+        ReportDesign design = ReportManagerUtil.createExcelTemplateDesign(EXCEL_REPORT_DESIGN_UUID, reportDefinition, resourcePath);
+        design.addPropertyValue("repeatingSections", "sheet:1,row:15,dataset:dataset");
+
         return Arrays.asList(
-                ReportManagerUtil.createExcelTemplateDesign(EXCEL_REPORT_DESIGN_UUID, reportDefinition, resourcePath)
+            design
         );
     }
 
