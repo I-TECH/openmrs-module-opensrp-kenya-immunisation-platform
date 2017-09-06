@@ -9,6 +9,7 @@ import org.openmrs.module.reporting.report.ReportRequest;
 import org.openmrs.module.reporting.report.definition.ReportDefinition;
 import org.openmrs.module.reporting.report.manager.ReportManager;
 import org.openmrs.module.reporting.report.manager.ReportManagerUtil;
+import org.openmrs.module.reporting.report.util.ReportUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -77,8 +78,9 @@ public class Moh510Report implements ReportManager{
 
     @Override
     public List<ReportDesign> constructReportDesigns(ReportDefinition reportDefinition) {
+        String resourcePath = ReportUtil.getPackageAsPath(getClass()) + "/" + EXCEL_REPORT_RESOURCE_NAME;
         return Arrays.asList(
-                ReportManagerUtil.createExcelTemplateDesign(EXCEL_REPORT_DESIGN_UUID, reportDefinition, EXCEL_REPORT_RESOURCE_NAME)
+                ReportManagerUtil.createExcelTemplateDesign(EXCEL_REPORT_DESIGN_UUID, reportDefinition, resourcePath)
         );
     }
 
