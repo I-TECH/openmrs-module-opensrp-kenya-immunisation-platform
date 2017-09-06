@@ -1,9 +1,5 @@
---changeset me:ddl runOnChange:true endDelimiter:#$$
-
-DROP PROCEDURE IF EXISTS create_etl_tables
-
-$$
-
+DELIMITER $$
+DROP PROCEDURE IF EXISTS create_etl_tables$$
 CREATE PROCEDURE create_etl_tables()
 BEGIN
 DECLARE script_id INT(11);
@@ -118,10 +114,8 @@ SELECT "Successfully created etl_immunisations table";
 UPDATE openmrs_etl.etl_script_status SET stop_time=NOW() where id= script_id;
 
 
-END
-
-$$
-
+END$$
+DELIMITER ;
 
 
 

@@ -15,6 +15,7 @@
     <!--
         Run the scripts for OpenMRS reporting ETL.
     -->
+    <!--
     <changeSet id="kenyaimmunisationplatform-201709061653" author="amosl">
         <comment>
             Executing OpenMRS ETL scripts
@@ -24,5 +25,6 @@
         <sqlFile path="sql/schedule.sql"/>
 
     </changeSet>
+    -->
  
 </databaseChangeLog>
