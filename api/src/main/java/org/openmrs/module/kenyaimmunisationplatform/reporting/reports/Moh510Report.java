@@ -89,7 +89,7 @@ public class Moh510Report implements ReportManager{
 
     @Override
     public String getVersion() {
-        return null;
+        return "1.0-SNAPSHOT";
     }
 
 }
