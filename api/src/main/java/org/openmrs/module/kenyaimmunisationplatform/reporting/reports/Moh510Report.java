@@ -20,7 +20,7 @@ import java.util.List;
 public class Moh510Report implements ReportManager{
 
     public static final String EXCEL_REPORT_DESIGN_UUID = "5e1596c8-8bee-11e7-a7dd-080027b84a73";
-    public static final String EXCEL_REPORT_RESOURCE_NAME = "moh-510-permanent-register.xlsx";
+    public static final String EXCEL_REPORT_RESOURCE_NAME = "moh-510-permanent-register.xls";
 
     @Override
     public String getUuid() {
