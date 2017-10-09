@@ -31,6 +31,16 @@
 		<class>org.openmrs.module.kenyaimmunisationplatform.extension.html.AdminList</class>
 	</extension>
 
+	<extension>
+		<point>org.openmrs.headerFullIncludeExt</point>
+		<class>org.openmrs.module.kenyaimmunisationplatform.extension.html.KipHeaderIncludeExt</class>
+	</extension>
+
+	<extension>
+		<point>org.openmrs.headerMinimalIncludeExt</point>
+		<class>org.openmrs.module.kenyaimmunisationplatform.extension.html.KipHeaderIncludeExt</class>
+	</extension>
+
 	<aware_of_modules>
 		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
 	</aware_of_modules>

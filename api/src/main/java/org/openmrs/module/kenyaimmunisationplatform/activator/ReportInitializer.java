@@ -26,26 +26,26 @@ import org.openmrs.module.reporting.report.util.ReportUtil;
  * Initializes reports
  */
 public class ReportInitializer implements Initializer {
-
-    protected static final Log log = LogFactory.getLog(ReportInitializer.class);
-
-    /**
-     * @see Initializer#started()
-     */
-    @Override
-    public synchronized void started() {
-        for (ReportManager reportManager : Context.getRegisteredComponents(ReportManager.class)) {
-            log.info("Setting up report " +reportManager.getName() + "...");
-            ReportManagerUtil.setupReport(reportManager);
-        }
-
-        ReportUtil.updateGlobalProperty(ReportingConstants.GLOBAL_PROPERTY_DATA_EVALUATION_BATCH_SIZE, "-1");
-    }
-
-    /**
-     * @see Initializer#stopped()
-     */
-    @Override
-    public void stopped() {
-    }
+	
+	protected static final Log log = LogFactory.getLog(ReportInitializer.class);
+	
+	/**
+	 * @see Initializer#started()
+	 */
+	@Override
+	public synchronized void started() {
+		for (ReportManager reportManager : Context.getRegisteredComponents(ReportManager.class)) {
+			log.info("Setting up report " + reportManager.getName() + "...");
+			ReportManagerUtil.setupReport(reportManager);
+		}
+		
+		ReportUtil.updateGlobalProperty(ReportingConstants.GLOBAL_PROPERTY_DATA_EVALUATION_BATCH_SIZE, "-1");
+	}
+	
+	/**
+	 * @see Initializer#stopped()
+	 */
+	@Override
+	public void stopped() {
+	}
 }

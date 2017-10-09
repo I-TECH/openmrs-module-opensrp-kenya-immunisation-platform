@@ -25,26 +25,6 @@
 
     <context:component-scan base-package="org.openmrs.module.kenyaimmunisationplatform" />
 
-    <!-- Wraps KenyaImmunisationPlatformService methods in DB transactions and OpenMRS interceptors,
-    which set audit info like dateCreated, changedBy, etc.-->
-    <bean id="kenyaimmunisationplatform.KenyaImmunisationPlatformService"
-            class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager">
-            <ref bean="transactionManager" />
-        </property>
-        <property name="target">
-            <bean class="org.openmrs.module.kenyaimmunisationplatform.api.impl.KenyaImmunisationPlatformServiceImpl">
-                <property name="dao" ref="kenyaimmunisationplatform.KenyaImmunisationPlatformDao" />
-            </bean>
-        </property>
-        <property name="preInterceptors">
-            <ref bean="serviceInterceptors" />
-        </property>
-        <property name="transactionAttributeSource">
-            <ref bean="transactionAttributeSource" />
-        </property>
-    </bean>
-
     <!-- Adds KenyaImmunisationPlatformService to OpenMRS context so it can be accessed
     calling Context.getService(KenyaImmunisationPlatformService.class) -->
     <bean parent="serviceContext">

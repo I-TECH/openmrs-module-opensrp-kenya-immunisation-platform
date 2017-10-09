@@ -18,12 +18,12 @@ package org.openmrs.module.kenyaimmunisationplatform.activator;
  * Interface for code to be run during the module activation process
  */
 public interface Initializer {
-
+	
 	/**
 	 * Run during the activator started method
 	 */
 	void started();
-
+	
 	/**
 	 * Run during the activator stopped method
 	 */

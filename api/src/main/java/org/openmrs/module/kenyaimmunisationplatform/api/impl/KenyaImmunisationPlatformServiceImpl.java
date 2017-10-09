@@ -9,16 +9,33 @@
  */
 package org.openmrs.module.kenyaimmunisationplatform.api.impl;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.openmrs.Location;
+import org.openmrs.LocationTag;
 import org.openmrs.api.APIException;
+import org.openmrs.api.LocationService;
 import org.openmrs.api.UserService;
+import org.openmrs.api.db.LocationDAO;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.kenyaimmunisationplatform.Item;
 import org.openmrs.module.kenyaimmunisationplatform.api.KenyaImmunisationPlatformService;
 import org.openmrs.module.kenyaimmunisationplatform.api.dao.KenyaImmunisationPlatformDao;
+import org.openmrs.module.kenyaimmunisationplatform.util.KipConstants;
+import org.openmrs.module.kenyaimmunisationplatform.util.KipUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service("kenyaimmunisationplatform.KenyaImmunisationPlatformService")
 public class KenyaImmunisationPlatformServiceImpl extends BaseOpenmrsService implements KenyaImmunisationPlatformService {
 	
+	@Autowired
 	KenyaImmunisationPlatformDao dao;
+	
+	@Autowired
+	LocationService locationService;
 	
 	UserService userService;
 	
@@ -48,5 +65,33 @@ public class KenyaImmunisationPlatformServiceImpl extends BaseOpenmrsService imp
 		}
 		
 		return dao.saveItem(item);
+	}
+	
+	@Override
+	public JSONArray getChildLocations(int parentLocationId) {
+		Location parent = locationService.getLocation(parentLocationId);
+		
+		List<Location> locations = locationService.getLocations("", parent, null, false, null, null);
+		
+		JSONArray jsonArray = new JSONArray();
+		for (Location l : locations) {
+			jsonArray.put(KipUtil.createLocationJson(l));
+		}
+		
+		return jsonArray;
+	}
+	
+	@Override
+	public JSONArray getAllCounties() {
+		LocationTag locationTag = locationService.getLocationTagByName(KipConstants.LOCATION_TAG_COUNTY);
+		
+		List<Location> locations = locationService.getLocationsByTag(locationTag);
+		
+		JSONArray jsonArray = new JSONArray();
+		for (Location l : locations) {
+			jsonArray.put(KipUtil.createLocationJson(l));
+		}
+		
+		return jsonArray;
 	}
 }

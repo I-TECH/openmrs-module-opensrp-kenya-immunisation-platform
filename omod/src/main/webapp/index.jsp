@@ -14,7 +14,7 @@
       <tr>
         <td>${user.userId}</td>
         <td>${user.systemId}</td>
-      </tr>		
+      </tr>
   </c:forEach>
 </table>
 

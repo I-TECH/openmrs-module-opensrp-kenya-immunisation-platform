@@ -31,11 +31,11 @@ public class KenyaImmunisationPlatformActivator extends BaseModuleActivator {
 	 */
 	public void started() {
 		log.info("OpenMRS Module OpenSRP Immunisation Platform module started - initializing...");
-
+		
 		for (Initializer initializer : getInitializers()) {
 			initializer.started();
 		}
-
+		
 		Context.getService(MetadataDeployService.class)
 		        .installBundles(Context.getRegisteredComponents(MetadataBundle.class));
 		log.info("Started OpenMRS Module OpenSRP Immunisation Platform");
@@ -47,7 +47,7 @@ public class KenyaImmunisationPlatformActivator extends BaseModuleActivator {
 	public void shutdown() {
 		log.info("Shutdown OpenMRS Module OpenSRP Immunisation Platform");
 	}
-
+	
 	public List<Initializer> getInitializers() {
 		List<Initializer> l = new ArrayList<Initializer>();
 		l.add(new ReportInitializer());

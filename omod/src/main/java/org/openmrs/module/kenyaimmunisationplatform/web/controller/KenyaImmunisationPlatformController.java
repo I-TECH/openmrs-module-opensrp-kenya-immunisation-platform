@@ -9,85 +9,46 @@
  */
 package org.openmrs.module.kenyaimmunisationplatform.web.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.User;
-import org.openmrs.api.UserService;
-import org.openmrs.api.context.Context;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.openmrs.module.kenyaimmunisationplatform.api.KenyaImmunisationPlatformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * This class configured as controller using annotation and mapped with the URL of
- * 'module/${rootArtifactid}/${rootArtifactid}Link.form'.
+ *
  */
-@Controller("${rootrootArtifactid}.KenyaImmunisationPlatformController")
-@RequestMapping(value = "module/${rootArtifactid}/${rootArtifactid}.form")
+@Controller
 public class KenyaImmunisationPlatformController {
 	
 	/** Logger for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
 	
 	@Autowired
-	UserService userService;
+	KenyaImmunisationPlatformService kenyaImmunisationPlatformService;
 	
-	/** Success form view name */
-	private final String VIEW = "/module/${rootArtifactid}/${rootArtifactid}";
-	
-	/**
-	 * Initially called after the getUsers method to get the landing form name
-	 * 
-	 * @return String form view name
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public String onGet() {
-		return VIEW;
+	@RequestMapping(value = "/module/kenyaimmunisationplatform/location", method = RequestMethod.GET)
+	@ResponseBody
+	public String getChildLocations(@RequestParam("locationId") int locationId) {
+		JSONObject result = new JSONObject();
+		result.put("data", kenyaImmunisationPlatformService.getChildLocations(locationId));
+		
+		return result.toString();
 	}
 	
-	/**
-	 * All the parameters are optional based on the necessity
-	 * 
-	 * @param httpSession
-	 * @param anyRequestObject
-	 * @param errors
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public String onPost(HttpSession httpSession, @ModelAttribute("anyRequestObject") Object anyRequestObject,
-	        BindingResult errors) {
+	@RequestMapping(value = "/module/kenyaimmunisationplatform/counties", method = RequestMethod.GET)
+	@ResponseBody
+	public String getAllCounties() {
+		JSONObject result = new JSONObject();
+		result.put("data", kenyaImmunisationPlatformService.getAllCounties());
 		
-		if (errors.hasErrors()) {
-			// return error view
-		}
-		
-		return VIEW;
-	}
-	
-	/**
-	 * This class returns the form backing object. This can be a string, a boolean, or a normal java
-	 * pojo. The bean name defined in the ModelAttribute annotation and the type can be just defined
-	 * by the return type of this method
-	 */
-	@ModelAttribute("users")
-	protected List<User> getUsers() throws Exception {
-		if (Context.isAuthenticated()) {
-			List<User> users = userService.getAllUsers();
-			
-			// this object will be made available to the jsp page under the variable name
-			// that is defined in the @ModuleAttribute tag
-			return users;
-		} else {
-			return new ArrayList<User>();
-		}
+		return result.toString();
 	}
 	
 }

@@ -9,6 +9,7 @@
  */
 package org.openmrs.module.kenyaimmunisationplatform.api;
 
+import org.json.JSONArray;
 import org.openmrs.annotation.Authorized;
 import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
@@ -45,4 +46,19 @@ public interface KenyaImmunisationPlatformService extends OpenmrsService {
 	@Authorized(KenyaImmunisationPlatformConfig.MODULE_PRIVILEGE)
 	@Transactional
 	Item saveItem(Item item) throws APIException;
+	
+	/**
+	 * Given a location id, get all child locations
+	 * 
+	 * @param parentLocationId
+	 * @return
+	 */
+	JSONArray getChildLocations(int parentLocationId);
+	
+	/**
+	 * Get all locations with location tag 'county'
+	 * 
+	 * @return
+	 */
+	JSONArray getAllCounties();
 }
