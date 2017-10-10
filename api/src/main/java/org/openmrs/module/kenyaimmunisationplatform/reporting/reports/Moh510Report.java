@@ -59,15 +59,17 @@ public class Moh510Report implements ReportManager {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT d.kip_id, d.permanent_register_number, d.cwc_number, "
-		        + " concat(d.given_name, ' ', d.middle_name, ' ', d.family_name) as name,"
-		        + " concat(d.mother_first_name, ' ', d.mother_last_name) as mother_name,"
-		        + " concat(d.guardian_first_name, ' ', d.guardian_last_name) as father_name,"
+		        + " concat(coalesce(d.given_name,''), ' ', coalesce(d.middle_name,''), ' ', coalesce(d.family_name,'')) as name,"
+		        + " concat(coalesce(d.mother_first_name,''), ' ', coalesce(d.mother_last_name,'')) as mother_name,"
+		        + " concat(coalesce(d.guardian_first_name,''), ' ', coalesce(d.guardian_last_name,'')) as father_name,"
 		        + " d.gender, d.dob, i.bcg_vx_date, i.opv_0_vx_date, i.opv_1_vx_date, i.pcv_1_vx_date, "
 		        + " i.penta_1_vx_date, i.rota_1_vx_date, i.opv_2_vx_date, i.pcv_2_vx_date, i.penta_2_vx_date, "
 		        + " i.rota_2_vx_date, i.opv_3_vx_date, i.pcv_3_vx_date, i.penta_3_vx_date, i.ipv_vx_date, "
 		        + " i.mr_1_vx_date, i.mr_2_vx_date, i.mr_at_6_vx_date, i.yf_vx_date, i.vit_at_6_vx_date"
 		        + " from openmrs_etl.etl_patient_demographics d left join openmrs_etl.etl_immunisations i "
-		        + " on d.patient_id = i.patient_id");
+		        + " on d.patient_id = i.patient_id "
+		        + " where d.county_id=:county and d.sub_county_id=:subCounty and d.ward_id=:ward "
+		        + " and (d.date_created between :startDate and :endDate )");
 		
 		sqlDataSetDefinition.setSqlQuery(sb.toString());
 		reportDefinition.addDataSetDefinition("dataset", Mapped.mapStraightThrough(sqlDataSetDefinition));

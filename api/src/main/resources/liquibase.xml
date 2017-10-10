@@ -21,7 +21,6 @@
             Executing OpenMRS ETL scripts
         </comment>
         <sqlFile path="sql/ddl.sql"/>
-        <sqlFile path="sql/dml.sql"/>
         <sqlFile path="sql/schedule.sql"/>
 
     </changeSet>

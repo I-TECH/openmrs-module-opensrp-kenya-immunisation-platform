@@ -4,7 +4,7 @@ CREATE PROCEDURE sp_update_etl_patient_demographics()
 BEGIN
 
 DECLARE last_update_time DATETIME;
-SELECT max(start_time) into last_update_time from openmrs_etl.etl_script_status;
+SELECT max(proc_time) into last_update_time from openmrs_etl.etl_script_status;
 -- update etl_patient_demographics table
 insert into openmrs_etl.etl_patient_demographics(
 patient_id,
@@ -12,7 +12,8 @@ given_name,
 middle_name,
 family_name,
 gender,
-dob
+dob,
+date_created
 )
 select
 p.person_id,
@@ -20,7 +21,8 @@ p.given_name,
 p.middle_name,
 p.family_name,
 p.gender,
-p.birthdate
+p.birthdate,
+p.date_created
 FROM (
 select
 p.person_id,
@@ -28,7 +30,8 @@ pn.given_name,
 pn.middle_name,
 pn.family_name,
 p.gender,
-p.birthdate
+p.birthdate,
+pa.date_created
 from person p
 join patient pa on pa.patient_id=p.person_id
 inner join person_name pn on pn.person_id = p.person_id and pn.voided=0
@@ -39,8 +42,7 @@ or p.date_created > last_update_time
 or p.date_changed > last_update_time
 or p.date_voided > last_update_time
 GROUP BY p.person_id
-) p
-ON DUPLICATE KEY UPDATE given_name = p.given_name, middle_name=p.middle_name, family_name=p.family_name;
+)p ON DUPLICATE KEY UPDATE given_name = p.given_name, middle_name=p.middle_name, family_name=p.family_name;
 
 
 -- Set up mother and guardian details --
@@ -93,7 +95,7 @@ set d.national_id_no=pid.national_id_no,
 ;
 
 update openmrs_etl.etl_patient_demographics d
-join (select pa.patient_id,
+join (select pa.person_id,
 pa.state_province as county,
 pa.county_district as sub_county,
 pa.city_village as ward,
@@ -102,7 +104,7 @@ pa.address3 as village,
 pa.address2 as landmark,
 pa.address1 as address
 from person_address pa where voided=0 and (pa.date_created > last_update_time or pa.date_changed > last_update_time or pa.date_voided > last_update_time)
-group by pa.patient_id) pa on pa.patient_id = d.patient_id
+group by pa.person_id) pa on pa.person_id = d.patient_id
 set d.county = pa.county,
 	d.sub_county = pa.sub_county,
 	d.ward = pa.ward,
@@ -111,6 +113,59 @@ set d.county = pa.county,
 	d.landmark = pa.landmark,
 	d.address = pa.address
 ;
+
+-- Update patient_demographics set county id --
+update openmrs_etl.etl_patient_demographics d
+join (select l.location_id, l.name from location l) county on d.county = county.name
+set d.county_id = county.location_id where d.county_id is null;
+
+-- Update patient_demographics set sub county id --
+update openmrs_etl.etl_patient_demographics d
+join (select l.location_id, l.name from location l) sub_county on d.sub_county = sub_county.name
+set d.sub_county_id = sub_county.location_id where d.sub_county_id is null;
+
+-- Update patient_demographics set ward id --
+update openmrs_etl.etl_patient_demographics d
+join (select l.location_id, l.name from location l) ward on d.ward = ward.name
+set d.ward_id = ward.location_id where d.ward_id is null;
+
+-- Update patient_demographics set health facility id --
+update openmrs_etl.etl_patient_demographics d
+join (select l.location_id, l.name from location l) health_facility on d.health_facility = health_facility.name
+set d.health_facility_id = health_facility.location_id where d.health_facility_id is null;
+
+END$$
+DELIMITER ;
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_update_immunisations$$
+CREATE PROCEDURE sp_update_immunisations(IN concept_id INT(11), IN sequence_number TINYINT, IN col_name VARCHAR(25), IN last_update_time DATETIME)
+BEGIN
+
+	IF sequence_number <> '' THEN
+		SET @query = CONCAT('update openmrs_etl.etl_immunisations i join ( select vx.person_id, vx.obs_datetime
+				from obs vx join obs vx_seq on vx.encounter_id = vx_seq.encounter_id and vx_seq.concept_id=1418
+        and vx.concept_id = ? and vx_seq.value_numeric = ?
+        where vx.date_created > "',last_update_time,'" or vx.obs_datetime > "',last_update_time,'"
+        or vx_seq.date_created > "',last_update_time,'" or vx_seq.obs_datetime > "',last_update_time,'" group by vx.person_id) o
+        on o.person_id = i.patient_id set i.' , col_name, ' = o.obs_datetime');
+		PREPARE stmt FROM @query;
+		SET @concept_id = concept_id;
+		SET @sequence_number = sequence_number;
+		EXECUTE stmt USING @concept_id, @sequence_number;
+		DEALLOCATE PREPARE stmt;
+	ELSE
+		SET @query = CONCAT('update openmrs_etl.etl_immunisations i join ( select vx.person_id, vx.obs_datetime
+				from obs vx join obs vx_seq on vx.encounter_id = vx_seq.encounter_id and vx_seq.concept_id=1418
+        and vx.concept_id = ? where vx.date_created > "',last_update_time,'" or vx.obs_datetime > "',last_update_time,'"
+        or vx_seq.date_created > "',last_update_time,'" or vx_seq.obs_datetime > "',last_update_time,'" group by vx.person_id) o
+        on o.person_id = i.patient_id set i.' , col_name, ' = o.obs_datetime');
+		PREPARE stmt FROM @query;
+		SET @concept_id = concept_id;
+		EXECUTE stmt USING @concept_id;
+		DEALLOCATE PREPARE stmt;
+	END IF;
 
 END$$
 DELIMITER ;
@@ -122,40 +177,29 @@ CREATE PROCEDURE sp_update_etl_immunisations()
 BEGIN
 
 DECLARE last_update_time DATETIME;
-SELECT max(start_time) into last_update_time from openmrs_etl.etl_script_status;
+SELECT max(proc_time) into last_update_time from openmrs_etl.etl_script_status;
 
-insert into openmrs_etl.etl_immunisations(
-			patient_id
-		)	select distinct o.person_id from obs o where o.date_created > last_update_time or o.obs_datetime > last_update_time
-		ON DUPLICATE KEY UPDATE patient_id = o.person_id;
+insert into openmrs_etl.etl_immunisations(patient_id)	select distinct o.person_id from obs o where o.date_created > last_update_time or o.obs_datetime > last_update_time
+ON DUPLICATE KEY UPDATE patient_id = o.person_id;
 
-		update openmrs_etl.etl_immunisations i
-			join (
-				select vx.person_id, vx.concept_id, vx.obs_datetime, vx. encounter_id, vx_seq.value_numeric
-				from obs vx join obs vx_seq on vx.encounter_id = vx_seq.encounter_id and vx_seq.concept_id=1418
-        and vx.concept_id <> 1410 and vx.concept_id <> 1418
-        where vx.date_created > last_update_time or vx.obs_datetime > last_update_time
-        or vx_seq.date_created > last_update_time or vx_seq.obs_datetime > last_update_time
-				) o on o.person_id = i.patient_id
-			set i.bcg_vx_date = IF(o.concept_id=886, o.obs_datetime, i.bcg_vx_date),
-				i.opv_0_vx_date = IF(o.concept_id=783 AND o.value_numeric=0, o.obs_datetime, i.opv_0_vx_date),
-				i.opv_1_vx_date = IF(o.concept_id=783 AND o.value_numeric=1, o.obs_datetime, i.opv_1_vx_date),
-				i.pcv_1_vx_date = IF(o.concept_id=162342 AND o.value_numeric=1, o.obs_datetime, i.pcv_1_vx_date),
-				i.penta_1_vx_date = IF(o.concept_id=1685 AND o.value_numeric=1, o.obs_datetime, i.penta_1_vx_date),
-				i.rota_1_vx_date = IF(o.concept_id=159698 AND o.value_numeric=1, o.obs_datetime, i.rota_1_vx_date),
-				i.opv_2_vx_date = IF(o.concept_id=783 AND o.value_numeric=2, o.obs_datetime, i.opv_2_vx_date),
-				i.pcv_2_vx_date = IF(o.concept_id=162342 AND o.value_numeric=2, o.obs_datetime, i.pcv_2_vx_date),
-				i.penta_2_vx_date = IF(o.concept_id=1685 AND o.value_numeric=2, o.obs_datetime, i.penta_2_vx_date),
-				i.rota_2_vx_date = IF(o.concept_id=159698 AND o.value_numeric=2, o.obs_datetime, i.rota_2_vx_date),
-				i.opv_3_vx_date = IF(o.concept_id=783 AND o.value_numeric=3, o.obs_datetime, i.opv_3_vx_date),
-				i.pcv_3_vx_date = IF(o.concept_id=162342 AND o.value_numeric=3, o.obs_datetime, i.pcv_3_vx_date),
-				i.penta_3_vx_date = IF(o.concept_id=1685 AND o.value_numeric=3, o.obs_datetime, i.penta_3_vx_date),
-				i.ipv_vx_date = IF(o.concept_id=1422, o.obs_datetime, i.ipv_vx_date),
-				i.mr_1_vx_date = IF(o.concept_id=162586 AND o.value_numeric=1, o.obs_datetime, i.mr_1_vx_date),
-				i.mr_2_vx_date = IF(o.concept_id=162586 AND o.value_numeric=2, o.obs_datetime, i.mr_2_vx_date),
-				i.mr_at_6_vx_date = IF(o.concept_id=162586 AND o.value_numeric=6, o.obs_datetime, i.mr_at_6_vx_date),
-				i.yf_vx_date = IF(o.concept_id=5864, o.obs_datetime, i.yf_vx_date)
-		;
+	CALL sp_update_immunisations(886, '', 'bcg_vx_date', last_update_time);
+	CALL sp_update_immunisations(783, 0, 'opv_0_vx_date', last_update_time);
+	CALL sp_update_immunisations(783, 1, 'opv_1_vx_date', last_update_time);
+	CALL sp_update_immunisations(162342, 1, 'pcv_1_vx_date', last_update_time);
+	CALL sp_update_immunisations(1685, 1, 'penta_1_vx_date', last_update_time);
+	CALL sp_update_immunisations(159698, 1, 'rota_1_vx_date', last_update_time);
+	CALL sp_update_immunisations(783, 2, 'opv_2_vx_date', last_update_time);
+	CALL sp_update_immunisations(162342, 2, 'pcv_2_vx_date', last_update_time);
+	CALL sp_update_immunisations(1685, 2, 'penta_2_vx_date', last_update_time);
+	CALL sp_update_immunisations(159698, 2, 'rota_2_vx_date', last_update_time);
+	CALL sp_update_immunisations(783, 3, 'opv_3_vx_date', last_update_time);
+	CALL sp_update_immunisations(162342, 3, 'pcv_3_vx_date', last_update_time);
+	CALL sp_update_immunisations(1685, 3, 'penta_3_vx_date', last_update_time);
+	CALL sp_update_immunisations(1422, '', 'ipv_vx_date', last_update_time);
+	CALL sp_update_immunisations(162586, 1, 'mr_1_vx_date', last_update_time);
+	CALL sp_update_immunisations(162586, 2, 'mr_2_vx_date', last_update_time);
+	CALL sp_update_immunisations(162586, 6, 'mr_at_6_vx_date', last_update_time);
+	CALL sp_update_immunisations(5864, '', 'yf_vx_date', last_update_time);
 
 END$$
 DELIMITER ;
@@ -174,7 +218,7 @@ SET update_script_id = LAST_INSERT_ID();
 CALL sp_update_etl_patient_demographics();
 CALL sp_update_etl_immunisations();
 
-UPDATE openmrs_etl.etl_script_status SET stop_time=NOW() where id= update_script_id;
+UPDATE openmrs_etl.etl_script_status SET proc_time=NOW(), stop_time=NOW() where id= update_script_id;
 
 END$$
 DELIMITER ;

@@ -16,6 +16,7 @@ id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 script_name VARCHAR(50) DEFAULT null,
 start_time DATETIME DEFAULT NULL,
 stop_time DATETIME DEFAULT NULL,
+proc_time DATETIME DEFAULT 0,
 error VARCHAR(255) DEFAULT NULL,
 INDEX(stop_time),
 INDEX(start_time)
@@ -60,14 +61,20 @@ guardian_gender VARCHAR(7),
 guardian_dob DATE,
 guardian_relationship VARCHAR(50) DEFAULT NULL,
 guardian_national_id VARCHAR(20) DEFAULT NULL,
+county_id INT(11),
 county VARCHAR(50),
+sub_county_id INT(11),
 sub_county VARCHAR(50),
+ward_id INT(11),
 ward VARCHAR(50),
+health_facility_id INT(11),
+health_facility VARCHAR(100),
 sub_location VARCHAR(50),
 village VARCHAR(50),
 address VARCHAR(50),
 landmark VARCHAR(50),
 hei VARCHAR(20),
+date_created DATETIME,
 index(patient_id),
 index(Gender),
 index(permanent_register_number),
@@ -117,5 +124,6 @@ UPDATE openmrs_etl.etl_script_status SET stop_time=NOW() where id= script_id;
 END$$
 DELIMITER ;
 
-
+-- Call procedure to create tables --
+CALL create_etl_tables();
 
