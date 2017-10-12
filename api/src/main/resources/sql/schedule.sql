@@ -103,7 +103,7 @@ pa.address4 as sub_location,
 pa.address3 as village,
 pa.address2 as landmark,
 pa.address1 as address, 
-pa.address5 as health_facility,
+pa.address5 as health_facility 
 from person_address pa where voided=0 and (pa.date_created > last_update_time or pa.date_changed > last_update_time or pa.date_voided > last_update_time)
 group by pa.person_id) pa on pa.person_id = d.patient_id
 set d.county = pa.county,
@@ -229,7 +229,7 @@ DELIMITER $$
 SET GLOBAL EVENT_SCHEDULER=ON$$
 DROP EVENT IF EXISTS event_update_openmrs_etl_tables$$
 CREATE EVENT event_update_openmrs_etl_tables
-	ON SCHEDULE EVERY 5 MINUTE STARTS CURRENT_TIMESTAMP
+	ON SCHEDULE EVERY 30 MINUTE STARTS CURRENT_TIMESTAMP
 	DO
 		CALL sp_scheduled_updates();
 	$$
