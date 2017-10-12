@@ -102,7 +102,8 @@ pa.city_village as ward,
 pa.address4 as sub_location,
 pa.address3 as village,
 pa.address2 as landmark,
-pa.address1 as address
+pa.address1 as address, 
+pa.address5 as health_facility,
 from person_address pa where voided=0 and (pa.date_created > last_update_time or pa.date_changed > last_update_time or pa.date_voided > last_update_time)
 group by pa.person_id) pa on pa.person_id = d.patient_id
 set d.county = pa.county,
@@ -111,7 +112,8 @@ set d.county = pa.county,
 	d.sub_location = pa.sub_location,
 	d.village = pa.village,
 	d.landmark = pa.landmark,
-	d.address = pa.address
+	d.address = pa.address, 
+	d.health_facility = pa.health_facility 
 ;
 
 -- Update patient_demographics set county id --
