@@ -76,8 +76,8 @@ public class Moh510Report implements ReportManager {
 		        + " date_format(i.yf_vx_date, '%d/%m/%Y') as yf_vx_date, date_format(i.vit_at_6_vx_date, '%d/%m/%Y') as vit_at_6_vx_date "
 		        + " from openmrs_etl.etl_patient_demographics d left join openmrs_etl.etl_immunisations i "
 		        + " on d.patient_id = i.patient_id "
-		        + " where d.county_id=:county and d.sub_county_id=:subCounty and d.ward_id=:ward and d.health_facility_id=:healthFacility "
-		        + " and (d.date_created between :startDate and :endDate )");
+		        //+ " where d.county_id=:county and d.sub_county_id=:subCounty and d.ward_id=:ward and d.health_facility_id=:healthFacility "
+		        + " where d.health_facility_id=:healthFacility " + " and (d.date_created between :startDate and :endDate )");
 		
 		sqlDataSetDefinition.setSqlQuery(sb.toString());
 		reportDefinition.addDataSetDefinition("dataset", Mapped.mapStraightThrough(sqlDataSetDefinition));

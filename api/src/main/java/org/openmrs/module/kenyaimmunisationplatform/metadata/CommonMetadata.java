@@ -28,6 +28,10 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String NEW_WOMAN_REGISTRATION = "8cb2f455-4a98-11e7-9fd4-080027b84a73";
 		
 		public static final String NEW_GUARDIAN_REGISTRATION = "916fe5f5-4a98-11e7-9fd4-080027b84a73";
+		
+		public static final String GROWTH_MONITORING = "1e445134-b10f-11e7-816e-b85891cf5950";
+		
+		public static final String RECURRING_SERVICE = "1d14ab10-b10f-11e7-816e-b85891cf5950";
 	}
 	
 	public static final class _Form {
@@ -118,6 +122,8 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		    _EncounterType.NEW_WOMAN_REGISTRATION));
 		install(encounterType("New Guardian Registration", "Registration of a guardian of a child.",
 		    _EncounterType.NEW_GUARDIAN_REGISTRATION));
+		install(encounterType("Growth Monitoring", "Growth Monitoring", _EncounterType.GROWTH_MONITORING));
+		install(encounterType("Recurring Service", "Vitamin A, ITN, Deworming", _EncounterType.RECURRING_SERVICE));
 		
 		install(form("Child Enrollment Form", "The first form that captures basic demographic information on the "
 		        + "child and caregiver information", _EncounterType.REGISTRATION, "1", _Form.CHILD_ENROLLMENT));

@@ -181,8 +181,7 @@ BEGIN
 DECLARE last_update_time DATETIME;
 SELECT max(proc_time) into last_update_time from openmrs_etl.etl_script_status;
 
-insert into openmrs_etl.etl_immunisations(patient_id)	select distinct o.person_id from obs o where o.date_created > last_update_time or o.obs_datetime > last_update_time
-ON DUPLICATE KEY UPDATE patient_id = o.person_id;
+insert ignore into openmrs_etl.etl_immunisations(patient_id) select distinct o.person_id from obs o where o.date_created > last_update_time or o.obs_datetime > last_update_time;
 
 	CALL sp_update_immunisations(886, '', 'bcg_vx_date', last_update_time);
 	CALL sp_update_immunisations(783, 0, 'opv_0_vx_date', last_update_time);
