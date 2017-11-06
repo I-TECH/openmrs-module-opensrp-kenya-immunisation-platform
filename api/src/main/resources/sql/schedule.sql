@@ -49,16 +49,18 @@ GROUP BY p.person_id
 update openmrs_etl.etl_patient_demographics d
 join (select * from
 		(select p.person_id, p.gender,p.birthdate, pn.given_name, pn.family_name, r.person_b,
-			 concat(rt.a_is_to_b, " / ", rt.b_is_to_a) as relationship_type from person p join person_name pn on p.person_id = pn.person_id
+			 concat(rt.a_is_to_b, " / ", rt.b_is_to_a) as relationship_type, o_phone.value_text as mother_phone_number from person p join person_name pn on p.person_id = pn.person_id
 			left join relationship r on p.person_id = r.person_a join relationship_type rt
-				on r.relationship = rt.relationship_type_id where r.person_b in (select patient_id from patient) and (p.date_created > last_update_time
+				on r.relationship = rt.relationship_type_id left join obs o_phone on p.person_id = o.person_id and o.concept_id = 159635
+			where r.person_b in (select patient_id from patient) and (p.date_created > last_update_time
         or p.date_changed > last_update_time or pn.date_created > last_update_time or pn.date_changed > last_update_time or pn.date_voided > last_update_time)
 		 order by p.person_id asc) prx group by prx.person_b) m on m.person_b = d.patient_id
 	set d.mother_first_name = m.given_name,
 		d.mother_last_name = m.family_name,
 		d.mother_gender = m.gender,
 		d.mother_dob = m.birthdate,
-		d.mother_relationship = m.relationship_type
+		d.mother_relationship = m.relationship_type,
+		d.mother_phone_numer = m.mother_phone_number 
 ;
 
 -- Set up guardian details --
