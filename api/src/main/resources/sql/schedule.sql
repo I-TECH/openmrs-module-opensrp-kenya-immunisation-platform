@@ -45,7 +45,7 @@ GROUP BY p.person_id
 )p ON DUPLICATE KEY UPDATE given_name = p.given_name, middle_name=p.middle_name, family_name=p.family_name;
 
 
--- Set up mother and guardian details --
+-- Set up mother details --
 update openmrs_etl.etl_patient_demographics d
 join (select * from
 		(select p.person_id, p.gender,p.birthdate, pn.given_name, pn.family_name, r.person_b,
@@ -54,20 +54,23 @@ join (select * from
 				on r.relationship = rt.relationship_type_id where r.person_b in (select patient_id from patient) and (p.date_created > last_update_time
         or p.date_changed > last_update_time or pn.date_created > last_update_time or pn.date_changed > last_update_time or pn.date_voided > last_update_time)
 		 order by p.person_id asc) prx group by prx.person_b) m on m.person_b = d.patient_id
+	set d.mother_first_name = m.given_name,
+		d.mother_last_name = m.family_name,
+		d.mother_gender = m.gender,
+		d.mother_dob = m.birthdate,
+		d.mother_relationship = m.relationship_type
+;
+
+-- Set up guardian details --
+update openmrs_etl.etl_patient_demographics d
 join (select * from
 		(select p.person_id, p.gender,p.birthdate, pn.given_name, pn.family_name, r.person_b,
 			 concat(rt.a_is_to_b, " / ", rt.b_is_to_a) as relationship_type from person p join person_name pn on p.person_id = pn.person_id
 			left join relationship r on p.person_id = r.person_a join relationship_type rt
 				on r.relationship = rt.relationship_type_id where r.person_b in (select patient_id from patient) and (p.date_created > last_update_time
 				or p.date_changed > last_update_time or pn.date_created > last_update_time or pn.date_changed > last_update_time or pn.date_voided > last_update_time)
-		 order by p.person_id desc) prx group by prx.person_b having count(prx.person_b) > 1) g
-	on g.person_b = d.patient_id
-	set d.mother_first_name = m.given_name,
-		d.mother_last_name = m.family_name,
-		d.mother_gender = m.gender,
-		d.mother_dob = m.birthdate,
-		d.mother_relationship = m.relationship_type,
-		d.guardian_first_name = g.given_name,
+		 order by p.person_id desc) prx group by prx.person_b having count(prx.person_b) > 1) g on g.person_b = d.patient_id
+	set d.guardian_first_name = g.given_name,
 		d.guardian_last_name = g.family_name,
 		d.guardian_gender = g.gender,
 		d.guardian_dob = g.birthdate,
@@ -77,7 +80,7 @@ join (select * from
 update openmrs_etl.etl_patient_demographics d
 join (select pi.patient_id,
 max(if(pit.uuid='ccd8e564-030c-11e7-b443-54271eac1477',pi.identifier,null)) as national_id_no,
-max(if(pit.uuid='606a1a0c-348b-435c-9773-968471d3165f',pi.identifier,null)) kip_id,
+max(if(pit.uuid='8d793bee-c2cc-11de-8d13-0010c6dffd0f',pi.identifier,null)) kip_id,
 max(if(pit.uuid='1b12fc38-030d-11e7-b443-54271eac1477',pi.identifier,null)) permanent_register_number,
 max(if(pit.uuid='dae8f6b8-030c-11e7-b443-54271eac1477',pi.identifier,null)) nupi,
 max(if(pit.uuid='893bcc12-030c-11e7-b443-54271eac1477',pi.identifier,null)) cwc_number,
