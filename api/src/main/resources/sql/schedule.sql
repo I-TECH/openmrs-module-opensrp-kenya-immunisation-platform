@@ -94,7 +94,7 @@ join (select * from
 update openmrs_etl.etl_patient_demographics d
 	join (select  * from
 		(select o.person_id, o.value_text as guardian_national_id from obs o where o.concept_id = 163084 order by o.person_id desc)
-		a group by a.person_id) p on p.person_id = d.patient_id
+		a group by a.person_id having count(a.person_id) > 1) p on p.person_id = d.patient_id
 set d.guardian_national_id = p.guardian_national_id
 ;
 
