@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+ 
+    <!--
+    	See http://wiki.openmrs.org/display/docs/Module+liquibase+File for 
+    	documentation on this file.
+    
+        See http://www.liquibase.org/manual/home#available_database_refactorings
+        for a list of supported elements and attributes
+    -->
+    <!--
+        Run the scripts for OpenMRS reporting ETL.
+    -->
+    <!--
+    <changeSet id="kenyaimmunisationplatform-201709061653" author="amosl">
+        <comment>
+            Executing OpenMRS ETL scripts
+        </comment>
+        <sqlFile path="sql/ddl.sql"/>
+        <sqlFile path="sql/schedule.sql"/>
+
+    </changeSet>
+    -->
+ 
+</databaseChangeLog>

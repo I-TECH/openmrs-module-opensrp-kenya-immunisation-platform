@@ -102,7 +102,7 @@ public class LocationMetadata extends AbstractMetadataBundle {
 	 */
 	public void install(boolean full) throws Exception {
 		if (full) {
-			ObjectSource<Location> source = new LocationMflCsvSource("metadata/mfl-siaya-county-20170522.csv");
+			ObjectSource<Location> source = new LocationMflCsvSource("metadata/siayacounty-2018-dhis2-1607.csv");
 			sync(source, mflSynchronization);
 		}
 	}

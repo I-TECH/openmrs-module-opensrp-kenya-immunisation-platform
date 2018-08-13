@@ -62,14 +62,23 @@ public class LocationMflCsvSource extends AbstractCsvResourceSource<Location> {
 	@Override
 	public Location parseLine(String[] line) {
 		
-		String mflCode = line[0];
-		String name = line[1];
+		String mflCode = line[1];
+		String name = line[2];
 		
-		String countyName = line[9];
-		String constituencyName = line[10].equals(countyName) ? line[10] + " sub county" : line[10];
-		String subCountyName = line[11];
-		String wardName = line[12].equals(countyName) || line[12].equals(constituencyName) ? line[12] + " ward" : line[12];
-		String type = line[4];
+		String countyName = line[3];
+		String constituencyName = line[4].equals(countyName) ? line[4] + " sub county" : line[4];
+		String subCountyName = line[5];
+		String wardName = line[6].equals(countyName) || line[6].equals(constituencyName) ? line[6] + " ward" : line[6];
+		String type = line[7];
+		
+		//		String mflCode = line[0];
+		//		String name = line[1];
+		//
+		//		String countyName = line[9];
+		//		String constituencyName = line[10].equals(countyName) ? line[10] + " sub county" : line[10];
+		//		String subCountyName = line[11];
+		//		String wardName = line[12].equals(countyName) || line[12].equals(constituencyName) ? line[12] + " ward" : line[12];
+		//		String type = line[4];
 		
 		Set<LocationTag> locationTags;
 		
@@ -111,18 +120,24 @@ public class LocationMflCsvSource extends AbstractCsvResourceSource<Location> {
 			locationService.saveLocation(ward);
 		}
 		
-		Location healthFacility = new Location();
-		healthFacility.setName(name);
-		healthFacility.setDescription(type);
-		healthFacility.setParentLocation(ward);
-		healthFacility.setCountry("Kenya");
-		setAsAttribute(healthFacility, codeAttrType, mflCode);
-		
-		locationTags = new HashSet<LocationTag>();
-		locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.HEALTH_FACILITY));
-		healthFacility.setTags(locationTags);
+		Location healthFacility = locationService.getLocation(name);
+		if (healthFacility != null) {
+			healthFacility.setParentLocation(ward);
+		} else {
+			healthFacility = new Location();
+			healthFacility.setName(name);
+			healthFacility.setDescription(type);
+			healthFacility.setParentLocation(ward);
+			healthFacility.setCountry("Kenya");
+			setAsAttribute(healthFacility, codeAttrType, mflCode);
+			
+			locationTags = new HashSet<LocationTag>();
+			locationTags.add(MetadataUtils.existing(LocationTag.class, LocationMetadata._LocationTag.HEALTH_FACILITY));
+			healthFacility.setTags(locationTags);
+		}
 		
 		return healthFacility;
+		
 	}
 	
 	/**
