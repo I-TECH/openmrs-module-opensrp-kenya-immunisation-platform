@@ -1,9 +1,10 @@
 
 $(function() {
-    console.log( "ready!" );
     $('select[name="userEnteredParams[county]"]').css("width","100%").empty();
     KIP.getAllCounties('select[name="userEnteredParams[county]"]');
 
+    $('input.userEnteredParamyear,input.userEnteredParammonth').hide();
+    $('input.userEnteredParamyear,input.userEnteredParammonth').css('display', 'None');
     $('select[name="userEnteredParams[subCounty]"]').attr("disabled", true).css("width","100%").empty();
     $('select[name="userEnteredParams[ward]"]').attr("disabled", true).css("width","100%").empty();
     $('select[name="userEnteredParams[healthFacility]"]').attr("disabled", true).css("width","100%").empty();

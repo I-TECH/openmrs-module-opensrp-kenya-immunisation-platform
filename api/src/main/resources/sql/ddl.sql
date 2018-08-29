@@ -1,3 +1,5 @@
+# noinspection SqlNoDataSourceInspectionForFile
+
 DELIMITER $$
 DROP PROCEDURE IF EXISTS create_etl_tables$$
 CREATE PROCEDURE create_etl_tables()
@@ -116,9 +118,60 @@ create table openmrs_etl.etl_immunisations (
 SELECT "Successfully created etl_immunisations table";
 
 
+-- create table etl_moh_710
+create table openmrs_etl.etl_moh_710 (
+  id INT(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  county_id INT(11),
+  sub_county_id INT(11),
+  ward_id INT(11),
+  health_facility_id int(11),
+  year year(4),
+  month tinyint(2),
+  bcg_lt_1 int,
+  bcg_gt_1 int,
+  opv_0 int,
+  opv_1_lt_1 int,
+  opv_1_gt_1 int,
+  opv_2_lt_1 int,
+  opv_2_gt_1 int,
+  opv_3_lt_1 int,
+  opv_3_gt_1 int,
+  ipv_lt_1 int,
+  ipv_gt_1 int,
+  penta_1_lt_1 int,
+  penta_1_gt_1 int,
+  penta_2_lt_1 int,
+  penta_2_gt_1 int,
+  penta_3_lt_1 int,
+  penta_3_gt_1 int,
+  pcv_1_lt_1 int,
+  pcv_1_gt_1 int,
+  pcv_2_lt_1 int,
+  pcv_2_gt_1 int,
+  pcv_3_lt_1 int,
+  pcv_3_gt_1 int,
+  rota_1_lt_1 int,
+  rota_2_lt_1 int,
+  vit_at_6 int,
+  yf_lt_1 int,
+  yf_gt_1 int,
+  mr_1_lt_1 int,
+  mr_1_gt_1 int,
+  fic int,
+  vit_1 int,
+  vit_1_half int,
+  mr_2_1_half_2 int,
+  mr_2_gt_2 int,
+  vit_2_to_5 int,
+  unique(health_facility_id, year, month),
+  INDEX(health_facility_id)
+);
+SELECT "Successfully created etl_moh_710 table";
+
+
 -- Update stop time for script
 
-UPDATE openmrs_etl.etl_script_status SET stop_time=NOW() where id= script_id;
+UPDATE openmrs_etl.etl_script_status SET proc_time="1000-01-01 00:00:00", stop_time=NOW() where id= script_id;
 
 
 END$$

@@ -68,6 +68,13 @@
 				<scope>provided</scope>
 			</dependency>
 
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>htmlwidgets-api</artifactId>
+				<version>${htmlwidgetsVersion}</version>
+				<scope>provided</scope>
+			</dependency>
+
 			<!-- Begin OpenMRS core -->
 			<dependency>
 				<groupId>org.openmrs.api</groupId>
@@ -134,5 +141,6 @@
 		<metadatasharingVersion>1.1.8</metadatasharingVersion>
 		<idgenVersion>3.2</idgenVersion>
 		<reportingVersion>0.9.8.1</reportingVersion>
+		<htmlwidgetsVersion>1.6.4</htmlwidgetsVersion>
     </properties>
 </project>

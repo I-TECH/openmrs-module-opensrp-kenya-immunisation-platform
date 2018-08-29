@@ -1,3 +1,5 @@
+# noinspection SqlNoDataSourceInspectionForFile
+
 DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_update_etl_patient_demographics$$
 CREATE PROCEDURE sp_update_etl_patient_demographics()
@@ -253,7 +255,7 @@ CREATE PROCEDURE sp_update_immunisations(IN concept_id       INT(11), IN sequenc
                                          IN col_name         VARCHAR(25), IN last_update_time DATETIME)
   BEGIN
 
-    IF sequence_number <> ''
+    IF sequence_number <> -1
     THEN
       SET @query = CONCAT('update openmrs_etl.etl_immunisations i join ( select vx.person_id, vx.obs_datetime
 				from obs vx join obs vx_seq on vx.encounter_id = vx_seq.encounter_id and vx_seq.concept_id=1418
@@ -300,7 +302,7 @@ CREATE PROCEDURE sp_update_etl_immunisations()
                                                                   WHERE o.date_created > last_update_time OR
                                                                         o.obs_datetime > last_update_time;
 
-    CALL sp_update_immunisations(886, '', 'bcg_vx_date', last_update_time);
+    CALL sp_update_immunisations(886, -1, 'bcg_vx_date', last_update_time);
     CALL sp_update_immunisations(783, 0, 'opv_0_vx_date', last_update_time);
     CALL sp_update_immunisations(783, 1, 'opv_1_vx_date', last_update_time);
     CALL sp_update_immunisations(162342, 1, 'pcv_1_vx_date', last_update_time);
@@ -313,11 +315,11 @@ CREATE PROCEDURE sp_update_etl_immunisations()
     CALL sp_update_immunisations(783, 3, 'opv_3_vx_date', last_update_time);
     CALL sp_update_immunisations(162342, 3, 'pcv_3_vx_date', last_update_time);
     CALL sp_update_immunisations(1685, 3, 'penta_3_vx_date', last_update_time);
-    CALL sp_update_immunisations(1422, '', 'ipv_vx_date', last_update_time);
+    CALL sp_update_immunisations(1422, -1, 'ipv_vx_date', last_update_time);
     CALL sp_update_immunisations(162586, 1, 'mr_1_vx_date', last_update_time);
     CALL sp_update_immunisations(162586, 2, 'mr_2_vx_date', last_update_time);
     CALL sp_update_immunisations(162586, 6, 'mr_at_6_vx_date', last_update_time);
-    CALL sp_update_immunisations(5864, '', 'yf_vx_date', last_update_time);
+    CALL sp_update_immunisations(5864, -1, 'yf_vx_date', last_update_time);
 
   END$$
 DELIMITER ;

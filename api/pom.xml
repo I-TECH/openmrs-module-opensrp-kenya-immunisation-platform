@@ -25,6 +25,10 @@
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>reporting-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>htmlwidgets-api</artifactId>
+		</dependency>
         <dependency>
             <groupId>org.openmrs.api</groupId>
             <artifactId>openmrs-api</artifactId>
@@ -33,6 +37,11 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>htmlwidgets-omod</artifactId>
+			<version>1.6.6</version>
 		</dependency>
 	</dependencies>
 </project>
